@@ -14,7 +14,7 @@ abstract class Car {
         try {
             this.distance = Math.addExact(distance, 1);
         } catch (ArithmeticException e) {
-            throw ExceptionCause.FORWARD_EXCEED_LIMIT.exception();
+            throw CarProblem.FORWARD_EXCEED_LIMIT.exception();
         }
     }
 

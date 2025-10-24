@@ -1,17 +1,17 @@
 package racingcar.car;
 
-enum ExceptionCause {
+enum CarProblem {
 
     MOVE_ARGUMENT_OUT_OF_RANGE,
     INVALID_INPUT("잘못된 사용자 입력입니다."), FORWARD_EXCEED_LIMIT, INVALID_CAR_NAME_LENGTH;
 
     private final String message;
 
-    ExceptionCause() {
+    CarProblem() {
         this.message = this.name();
     }
 
-    ExceptionCause(String message) {
+    CarProblem(String message) {
         this.message = message;
     }
 

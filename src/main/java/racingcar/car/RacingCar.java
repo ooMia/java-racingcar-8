@@ -12,7 +12,7 @@ public class RacingCar extends Car {
 
     private void validateName(String name) {
         if (name == null || name.isEmpty() || name.length() > 5) {
-            throw ExceptionCause.INVALID_CAR_NAME_LENGTH.exception();
+            throw CarProblem.INVALID_CAR_NAME_LENGTH.exception();
         }
     }
 
@@ -45,7 +45,7 @@ public class RacingCar extends Car {
      */
     public void conditionalMove(int dice) {
         if (dice < 0 || dice > 9) {
-            throw ExceptionCause.MOVE_ARGUMENT_OUT_OF_RANGE.exception();
+            throw CarProblem.MOVE_ARGUMENT_OUT_OF_RANGE.exception();
         }
         if (dice >= 4) {
             move();
