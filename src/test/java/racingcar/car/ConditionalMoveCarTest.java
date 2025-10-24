@@ -10,11 +10,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class ConditionalMoveCarTest {
+public class ConditionalMoveCarTest {
     private static final int MOVING_FORWARD = 4;
     private static final int STOP = 3;
 
     private RacingCar car;
+
+    static public RacingCar getRacingCarByNameAndDistance(String name, int distance) {
+        return new RacingCar(name, distance);
+    }
 
     @BeforeEach
     void setUp() {
