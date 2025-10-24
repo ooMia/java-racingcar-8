@@ -1,6 +1,6 @@
 package racingcar.car;
 
-public class RacingCar extends Car {
+public class RacingCar extends Car implements Comparable<RacingCar> {
 
     private final StringBuilder status;
 
@@ -54,8 +54,17 @@ public class RacingCar extends Car {
         super.stop();
     }
 
+    public String name() {
+        return super.name;
+    }
+
     @Override
     public String toString() {
         return status.toString();
+    }
+
+    @Override
+    public int compareTo(RacingCar o) {
+        return Integer.compare(o.distance, super.distance);
     }
 }
