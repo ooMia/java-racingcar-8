@@ -1,6 +1,7 @@
 package racingcar.game;
 
 import camp.nextstep.edu.missionutils.Randoms;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import racingcar.car.RacingCar;
@@ -24,6 +25,25 @@ public class RacingGame {
             int randomValue = Randoms.pickNumberInRange(0, 9);
             car.conditionalMove(randomValue);
         }
+    }
+
+    public GameWinners getWinners() {
+        return getWinners(this.racingCars);
+    }
+
+    static GameWinners getWinners(List<RacingCar> racingCars) {
+        // TODO: enhance performance
+        var sortedRacingCars = racingCars.stream().sorted().toList();
+        var firstPrize = sortedRacingCars.getFirst();
+
+        var winnerNameList = new ArrayList<String>();
+        for (var car : sortedRacingCars) {
+            if (car.compareTo(firstPrize) > 0) {
+                break;
+            }
+            winnerNameList.add(car.name());
+        }
+        return new GameWinners(winnerNameList);
     }
 
     @Override
