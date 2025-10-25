@@ -1,89 +1,80 @@
 package racingcar.car;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+
+import racingcar.car.RacingCar.MoveRule;
 
 public class ConditionalMoveCarTest {
-    private static final int MOVING_FORWARD = 4;
-    private static final int STOP = 3;
 
-    private RacingCar car;
-
-    static public RacingCar getRacingCarByNameAndDistance(String name, int distance) {
+    // public helper method for testing
+    public static RacingCar getRacingCarByNameAndDistance(String name, int distance) {
         return new RacingCar(name, distance);
     }
 
+    private static final int MOVING_FORWARD = 4;
+    private static final int STOP = 3;
+
+    private RacingCar defaultBehaviorCar;
+
     @BeforeEach
     void setUp() {
-        car = new RacingCar("pobi");
+        defaultBehaviorCar = new RacingCar("pobi");
     }
 
     @Test
-    void instantiateFailWithNull() {
-        assertThrows(IllegalArgumentException.class, () -> new RacingCar(null));
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"", "abcdef", "가나다라마사"})
-    void instantiateFailWithInvalidNames(String name) {
-        assertThrows(IllegalArgumentException.class, () -> new RacingCar(name));
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"가나다라마", "abcde"})
-    void instantiateSuccessWithValidNames(String name) {
-        assertDoesNotThrow(() -> new RacingCar(name));
+    void testForwardFailWhenArgumentOutOfRange() {
+        assertThrows(IllegalArgumentException.class, () -> defaultBehaviorCar.forward(-1));
+        assertThrows(IllegalArgumentException.class, () -> defaultBehaviorCar.forward(10));
     }
 
     @Test
-    void moveFailWhenArgumentOutOfRange() {
-        assertThrows(IllegalArgumentException.class, () -> car.conditionalMove(-1));
-        assertThrows(IllegalArgumentException.class, () -> car.conditionalMove(10));
+    void testForwardWhenValueGreaterThanFourAsDefault() {
+        assertEquals(true, defaultBehaviorCar.forward(MOVING_FORWARD));
     }
 
     @Test
-    void moveDistanceToOneWhenValueGreaterThanFour() {
-        int expectDistance = 1;
-        car.conditionalMove(MOVING_FORWARD);
-        assertEquals(expectDistance, car.distance);
+    void testForwardWhenValueLessThanFourAsDefault() {
+        assertEquals(false, defaultBehaviorCar.forward(STOP));
     }
 
     @Test
-    void moveDistanceToZeroWhenValueLessThanFour() {
-        int expectDistance = 0;
-        car.conditionalMove(STOP);
-        assertEquals(expectDistance, car.distance);
-    }
-
-    @Test
-    @Disabled("move() append and store its status in StringBuilder, so try again after departing its status")
-    void moveFailedWhenIterationOverMaxInteger() {
+    void testForwardFailedWhenIterationOverMaxInteger() {
         var car = new RacingCar("pobi", Integer.MAX_VALUE);
-        assertThrows(IllegalArgumentException.class, () -> car.conditionalMove(MOVING_FORWARD));
+        assertThrows(IllegalArgumentException.class, () -> car.forward(MOVING_FORWARD));
     }
 
     @Test
-    void carStringIncreaseWhenMoved() {
+    void testCarStringIncreaseWhenMoved() {
         var car = new RacingCar("pobi", 3);
-        car.conditionalMove(MOVING_FORWARD);
+        car.forward(MOVING_FORWARD);
 
         String expect = "pobi : ----";
         assertEquals(expect, car.toString());
     }
 
     @Test
-    void carStringNotChangeWhenStopped() {
+    void testCarStringNotChangeWhenStopped() {
         var car = new RacingCar("pobi", 3);
-        car.conditionalMove(STOP);
+        car.forward(STOP);
 
         String expect = "pobi : ---";
         assertEquals(expect, car.toString());
     }
+
+    @Test
+    void testCustomMoveRule() {
+        MoveRule customRule = new RacingCar.MoveRule(7, 6, 8);
+        RacingCar customMoveCar = RacingCar.builder().name("asd").moveRule(customRule).build();
+
+        assertEquals(true, customMoveCar.forward(7));
+        assertEquals(false, customMoveCar.forward(6));
+
+        assertThrows(IllegalArgumentException.class, () -> customMoveCar.forward(5));
+        assertThrows(IllegalArgumentException.class, () -> customMoveCar.forward(9));
+    }
+
 }

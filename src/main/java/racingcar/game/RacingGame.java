@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import camp.nextstep.edu.missionutils.Randoms;
 import racingcar.car.RacingCar;
 
 public class RacingGame {
@@ -23,8 +22,7 @@ public class RacingGame {
 
     public void iterateSingleLap() {
         for (var car : this.racingCars) {
-            int randomValue = Randoms.pickNumberInRange(0, 9);
-            car.conditionalMove(randomValue);
+            car.move();
         }
     }
 
@@ -37,15 +35,16 @@ public class RacingGame {
     // 성능이 중요해, 역할 분리가 중요해? 둘도 만족시킬 방법은 없을까?
     static GameWinners getWinners(List<RacingCar> racingCars) {
         // TODO: enhance performance
-        var sortedRacingCars = racingCars.stream().sorted().toList();
+        var comparator = RacingCar.comparator();
+        var sortedRacingCars = racingCars.stream().sorted(comparator.reversed()).toList();
         var firstPrize = sortedRacingCars.getFirst();
 
         var winnerNameList = new ArrayList<String>();
         for (var car : sortedRacingCars) {
-            if (car.compareTo(firstPrize) > 0) {
+            if (comparator.compare(car, firstPrize) < 0) {
                 break;
             }
-            winnerNameList.add(car.name());
+            winnerNameList.add(car.name);
         }
         return new GameWinners(winnerNameList);
     }

@@ -6,9 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import racingcar.car.ConditionalMoveCarTest;
 import racingcar.car.RacingCar;
 
@@ -52,15 +54,18 @@ class RacingGameTest {
         // TODO: refactor test
         var names = List.of("pobi", "woni", "jun");
         var distances = List.of(2, 1, 2);
-        List<RacingCar> cars = new ArrayList<>();
-        for (int i = 0; i < 3; ++i) {
-            cars.add(createRacingCar(names.get(i), distances.get(i)));
-        }
+        List<RacingCar> cars = createRacingCars(names, distances);
+
         var expected = List.of("pobi", "jun").toArray();
         assertArrayEquals(expected, RacingGame.getWinners(cars).winnerNames().toArray());
     }
 
-    private RacingCar createRacingCar(String name, int distance) {
-        return ConditionalMoveCarTest.getRacingCarByNameAndDistance(name, distance);
+    private static List<RacingCar> createRacingCars(List<String> names, List<Integer> distances) {
+        List<RacingCar> result = new ArrayList<>();
+        for (int i = 0; i < names.size(); ++i) {
+            var car = ConditionalMoveCarTest.getRacingCarByNameAndDistance(names.get(i), distances.get(i));
+            result.add(car);
+        }
+        return result;
     }
 }

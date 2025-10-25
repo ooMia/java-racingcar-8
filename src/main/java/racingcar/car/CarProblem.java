@@ -3,7 +3,9 @@ package racingcar.car;
 enum CarProblem {
 
     MOVE_ARGUMENT_OUT_OF_RANGE,
-    INVALID_INPUT("잘못된 사용자 입력입니다."), FORWARD_EXCEED_LIMIT, INVALID_CAR_NAME_LENGTH;
+    FORWARD_EXCEED_LIMIT,
+    CAR_NAME_OUT_OF_BOUND,
+    CAR_NAME_NON_NULL_CONSTRAINT;
 
     private final String message;
 
@@ -11,14 +13,11 @@ enum CarProblem {
         this.message = this.name();
     }
 
-    CarProblem(String message) {
-        this.message = message;
-    }
-
-    // TODO: 여기에 추가로 Exception을 받는 애가 추가되면 좋을듯 ? 
-
-    public IllegalArgumentException exception() {
+    IllegalArgumentException exception() {
         return new IllegalArgumentException(this.message);
     }
 
+    IllegalArgumentException exception(ArithmeticException e) {
+        return new IllegalArgumentException(this.message, e);
+    }
 }
