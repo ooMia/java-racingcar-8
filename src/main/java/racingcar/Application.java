@@ -1,12 +1,17 @@
 package racingcar;
 
-import camp.nextstep.edu.missionutils.Console;
 import java.util.Arrays;
 import java.util.List;
+
+import camp.nextstep.edu.missionutils.Console;
 import racingcar.game.GameWinners;
 import racingcar.game.RacingGame;
 
 public class Application {
+
+    // TODO: 혼잡하다 혼잡해
+    // 각 객체에게 무언가를 전달하면 그 형식대로 출력을 해줄 수는 없을까?
+    // 출력의 규칙을 정의하기 위해 필요한 것이 있다면?
     public static void main(String[] args) {
         // TODO: refactor
         System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");

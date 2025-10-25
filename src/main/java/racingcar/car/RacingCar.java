@@ -2,6 +2,9 @@ package racingcar.car;
 
 public class RacingCar extends Car implements Comparable<RacingCar> {
 
+    // TODO: 그래 여기서 관리하면 변경 상황이 실시간 반영되고 편할 수 있어
+    // 하지만 만약 출력 형식이 바뀐다면?
+    // 출력이라는 건 이미 RacingCar의 관심사 밖 아니야?
     private final StringBuilder status;
 
     public RacingCar(String name) {
@@ -62,6 +65,8 @@ public class RacingCar extends Car implements Comparable<RacingCar> {
     public String toString() {
         return status.toString();
     }
+
+    // TODO: char : char - 두 개 받아서 문자열로 출력하는 함수를 만들까?
 
     @Override
     public int compareTo(RacingCar o) {

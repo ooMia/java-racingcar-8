@@ -15,6 +15,8 @@ enum CarProblem {
         this.message = message;
     }
 
+    // TODO: 여기에 추가로 Exception을 받는 애가 추가되면 좋을듯 ? 
+
     public IllegalArgumentException exception() {
         return new IllegalArgumentException(this.message);
     }

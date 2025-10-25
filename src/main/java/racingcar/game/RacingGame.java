@@ -1,9 +1,10 @@
 package racingcar.game;
 
-import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import camp.nextstep.edu.missionutils.Randoms;
 import racingcar.car.RacingCar;
 
 public class RacingGame {
@@ -31,6 +32,9 @@ public class RacingGame {
         return getWinners(this.racingCars);
     }
 
+    // TODO: 이건 거의 GameWinner의 관심사 아닐까?
+    // 근데 성능을 향상하려면 여기서 계속 상태를 관리하는 게 맞을지도?
+    // 성능이 중요해, 역할 분리가 중요해? 둘도 만족시킬 방법은 없을까?
     static GameWinners getWinners(List<RacingCar> racingCars) {
         // TODO: enhance performance
         var sortedRacingCars = racingCars.stream().sorted().toList();
