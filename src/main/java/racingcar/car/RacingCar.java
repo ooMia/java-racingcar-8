@@ -3,6 +3,7 @@ package racingcar.car;
 import java.util.Comparator;
 
 import camp.nextstep.edu.missionutils.Randoms;
+import racingcar.view.OutputView;
 
 public class RacingCar extends NamedCar implements Movable {
 
@@ -49,19 +50,14 @@ public class RacingCar extends NamedCar implements Movable {
 
     @Override
     public String toString() {
-        // TODO : refactor anyway; constant literal ?
-        // TODO: char : char - 두 개 받아서 문자열로 출력하는 함수를 만들까?
-        var status = new StringBuilder(this.name);
-        status.append(" : ");
-        status.repeat('-', this.distance);
-        return status.toString();
+        return OutputView.racingCar(name, distance);
     }
 
     public static Comparator<RacingCar> comparator() {
-        return Comparator.comparingInt(value -> value.distance);
+        return Comparator.comparingInt(car -> car.distance);
     }
 
-    public static record MoveRule(int minimumDiceToMove, int lowerBound, int upperBound) {
+    public record MoveRule(int minimumDiceToMove, int lowerBound, int upperBound) {
         public static final MoveRule DEFAULT_RULE = new MoveRule(4, 0, 9);
 
         public boolean isForward(int dice) {

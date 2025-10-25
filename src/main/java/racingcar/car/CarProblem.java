@@ -17,7 +17,7 @@ enum CarProblem {
         return new IllegalArgumentException(this.message);
     }
 
-    IllegalArgumentException exception(ArithmeticException e) {
+    IllegalArgumentException exception(Exception e) {
         return new IllegalArgumentException(this.message, e);
     }
 }

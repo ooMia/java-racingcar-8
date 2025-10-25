@@ -14,7 +14,7 @@ class NamedCar {
         this.name = name;
     }
 
-    public static record NameLengthRule(int lowerBound, int upperBound) {
+    public record NameLengthRule(int lowerBound, int upperBound) {
         public static final NameLengthRule DEFAULT_RULE = new NameLengthRule(1, 5);
 
         void validate(String name) {
