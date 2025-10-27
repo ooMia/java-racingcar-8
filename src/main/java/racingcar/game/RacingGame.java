@@ -25,6 +25,11 @@ public class RacingGame {
         return result;
     }
 
+    // TEST-PURPOSE ONLY
+    RacingGame(List<RacingCar> racingCars) {
+        this.racingCars = racingCars;
+    }
+
     public void iterateSingleLap() {
         for (var car : this.racingCars) {
             car.move();
@@ -32,11 +37,11 @@ public class RacingGame {
     }
 
     public String getCurrentWinners() {
-        var winnerNames = getWinners(this.racingCars);
+        var winnerNames = getWinners();
         return OutputView.gameWinners(winnerNames);
     }
 
-    static List<String> getWinners(List<RacingCar> racingCars) {
+    List<String> getWinners() {
         var comparator = RacingCar.comparator().reversed();
         var sortedRacingCars = racingCars.stream().sorted(comparator).toList();
         var firstPrizeOpponent = sortedRacingCars.getFirst();
