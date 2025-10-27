@@ -14,8 +14,4 @@ public enum GameProblem {
     public IllegalArgumentException exception() {
         return new IllegalArgumentException(this.message);
     }
-
-    public IllegalArgumentException exception(Exception e) {
-        return new IllegalArgumentException(this.message, e);
-    }
 }

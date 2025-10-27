@@ -11,10 +11,6 @@ enum ViewProblem {
         this.message = this.name();
     }
 
-    public IllegalArgumentException exception() {
-        return new IllegalArgumentException(this.message);
-    }
-
     public IllegalArgumentException exception(Exception e) {
         return new IllegalArgumentException(this.message, e);
     }
