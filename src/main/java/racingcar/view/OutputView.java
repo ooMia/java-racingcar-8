@@ -4,6 +4,13 @@ import racingcar.car.RacingCar;
 import racingcar.game.RacingGame;
 import racingcar.game.RacingGame.GameIteration;
 
+/**
+ * Responsible for formatting and displaying output of the application.
+ * This currently defined as a utility class with static methods only.
+ * However, if requirements change in the future,
+ * this class can be refactored into an instantiable class,
+ * and injected where it is needed.
+ */
 public final class OutputView {
 
     private OutputView() {

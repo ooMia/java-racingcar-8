@@ -8,9 +8,9 @@ public class Application {
     public static void main(String[] args) {
         var gameInfo = InputView.inputGameInfo();
         var racingGame = new RacingGame(gameInfo);
-        var iteration = InputView.inputGameIteration();
+        var numberIteration = InputView.inputGameIteration();
 
-        OutputView.printRunIterationLog(racingGame, iteration);
+        OutputView.printRunIterationLog(racingGame, numberIteration);
         OutputView.printRunWinnerResult(racingGame);
     }
 }

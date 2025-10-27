@@ -3,6 +3,7 @@ package racingcar.game;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
 import racingcar.car.RacingCar;
 import racingcar.view.OutputView;
 
@@ -30,12 +31,19 @@ public class RacingGame {
         this.racingCars = racingCars;
     }
 
+    /**
+     * Defines a single lap iteration.
+     * This is the only way to change the state of the game.
+     */
     public void iterateSingleLap() {
         for (var car : this.racingCars) {
             car.move();
         }
     }
 
+    /**
+     * @return a string representing the current winners of the game
+     */
     public String getCurrentWinners() {
         var winnerNames = getWinners();
         return OutputView.gameWinners(winnerNames);

@@ -3,7 +3,8 @@ package racingcar.game;
 public enum GameProblem {
 
     CAR_NAME_DUPLICATE,
-    ITERATION_NEGATIVE, NO_CAR_EXISTS;
+    ITERATION_NEGATIVE,
+    NO_CAR_EXISTS;
 
     private final String message;
 

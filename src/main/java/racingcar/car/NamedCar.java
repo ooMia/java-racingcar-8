@@ -14,6 +14,10 @@ class NamedCar {
         this.name = name;
     }
 
+    /**
+     * Defines the name length constraints for NamedCar. This throws an exception
+     * when a user tries to instantiate a NamedCar with an invalid name length.
+     */
     public record NameLengthRule(int lowerBound, int upperBound) {
         public static final NameLengthRule DEFAULT_RULE = new NameLengthRule(1, 5);
 

@@ -1,6 +1,7 @@
 package racingcar.car;
 
 import java.util.Comparator;
+
 import racingcar.util.external.MissionUtil;
 import racingcar.view.OutputView;
 
@@ -25,10 +26,17 @@ public class RacingCar extends NamedCar {
         this.distance = distance;
     }
 
+    /**
+     * @return a comparator representing the natural ordering of RacingCar
+     */
     public static Comparator<RacingCar> comparator() {
         return Comparator.comparingInt(car -> car.distance);
     }
 
+    /**
+     * Moves the car based on a random dice roll.
+     * The car moves forward if the value meets the move rule criteria.
+     */
     public void move() {
         int randomValue = getRandomDice();
         forward(randomValue);
@@ -55,6 +63,10 @@ public class RacingCar extends NamedCar {
         return OutputView.racingCar(name, distance);
     }
 
+    /**
+     * Defines the movement rule for the RacingCar. This throws an exception
+     * when a user tries to move with an invalid dice value.
+     */
     public record MoveRule(int lowerBound, int minimumDiceToMove, int upperBound) {
         public static final MoveRule DEFAULT_RULE = new MoveRule(0, 4, 9);
 
