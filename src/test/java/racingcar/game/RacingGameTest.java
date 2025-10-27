@@ -1,4 +1,4 @@
-package racingcar;
+package racingcar.game;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -6,15 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import racingcar.RacingGame.GameInfo;
-import racingcar.car.ConditionalMoveCarTest;
 import racingcar.car.RacingCar;
+import racingcar.car.RacingCarTest;
+import racingcar.game.RacingGame.GameInfo;
 
 class RacingGameTest {
 
@@ -33,13 +30,6 @@ class RacingGameTest {
     @Test
     void instantiateFailWhenCarNamesDuplicated() {
         var duplicatedNames = List.of("pobi", "pobi", "jun");
-        assertThrows(IllegalArgumentException.class, () -> gameFromListName(duplicatedNames));
-    }
-
-    @Test
-    @Disabled("enable after handling uppercases")
-    void instantiateFailWhenCarNamesDuplicatedWithUpperCases() {
-        var duplicatedNames = List.of("Pobi", "PoBI");
         assertThrows(IllegalArgumentException.class, () -> gameFromListName(duplicatedNames));
     }
 
@@ -71,7 +61,7 @@ class RacingGameTest {
     private static List<RacingCar> createRacingCars(List<String> names, List<Integer> distances) {
         List<RacingCar> result = new ArrayList<>();
         for (int i = 0; i < names.size(); ++i) {
-            var car = ConditionalMoveCarTest.getRacingCarByNameAndDistance(names.get(i), distances.get(i));
+            var car = RacingCarTest.getRacingCarByNameAndDistance(names.get(i), distances.get(i));
             result.add(car);
         }
         return result;

@@ -1,11 +1,13 @@
-package racingcar;
+package racingcar.game;
 
-public enum GlobalProblem {
-    INVALID_INPUT, FAILED_TO_PARSE_LONG, INTEGER_OUT_OF_BOUND, CAR_NAME_DUPLICATE;
+public enum GameProblem {
+
+    CAR_NAME_DUPLICATE,
+    ITERATION_NEGATIVE, NO_CAR_EXISTS;
 
     private final String message;
 
-    GlobalProblem() {
+    GameProblem() {
         this.message = this.name();
     }
 
