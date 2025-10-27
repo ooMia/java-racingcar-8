@@ -1,8 +1,7 @@
 package racingcar.car;
 
-import java.util.Comparator;
-
 import camp.nextstep.edu.missionutils.Randoms;
+import java.util.Comparator;
 import racingcar.view.OutputView;
 
 public class RacingCar extends NamedCar implements Movable {
@@ -24,6 +23,14 @@ public class RacingCar extends NamedCar implements Movable {
     RacingCar(String name, int distance) {
         super(name);
         this.distance = distance;
+    }
+
+    public static Comparator<RacingCar> comparator() {
+        return Comparator.comparingInt(car -> car.distance);
+    }
+
+    public static Builder builder() {
+        return new Builder();
     }
 
     @Override
@@ -53,10 +60,6 @@ public class RacingCar extends NamedCar implements Movable {
         return OutputView.racingCar(name, distance);
     }
 
-    public static Comparator<RacingCar> comparator() {
-        return Comparator.comparingInt(car -> car.distance);
-    }
-
     public record MoveRule(int minimumDiceToMove, int lowerBound, int upperBound) {
         public static final MoveRule DEFAULT_RULE = new MoveRule(4, 0, 9);
 
@@ -72,31 +75,27 @@ public class RacingCar extends NamedCar implements Movable {
         }
     }
 
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    static class Builder {
+    public static class Builder {
         private String name;
         private MoveRule moveRule = MoveRule.DEFAULT_RULE;
         private NameLengthRule nameLengthRule = NameLengthRule.DEFAULT_RULE;
 
-        Builder name(String name) {
+        public Builder name(String name) {
             this.name = name;
             return this;
         }
 
-        Builder moveRule(MoveRule moveRule) {
+        public Builder moveRule(MoveRule moveRule) {
             this.moveRule = moveRule;
             return this;
         }
 
-        Builder nameLengthRule(NameLengthRule nameLengthRule) {
+        public Builder nameLengthRule(NameLengthRule nameLengthRule) {
             this.nameLengthRule = nameLengthRule;
             return this;
         }
 
-        RacingCar build() {
+        public RacingCar build() {
             return new RacingCar(name, nameLengthRule, moveRule);
         }
     }

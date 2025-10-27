@@ -18,11 +18,11 @@ class NamedCar {
         public static final NameLengthRule DEFAULT_RULE = new NameLengthRule(1, 5);
 
         void validate(String name) {
-            if (name == null) {
-                throw CarProblem.CAR_NAME_NON_NULL_CONSTRAINT.exception();
+            if (name == null || name.isBlank()) {
+                throw CarProblem.NAME_NOT_PRINTABLE_CONSTRAINT.exception();
             }
             if (name.length() < lowerBound || upperBound < name.length()) {
-                throw CarProblem.CAR_NAME_OUT_OF_BOUND.exception();
+                throw CarProblem.NAME_OUT_OF_BOUND.exception();
             }
         }
     }

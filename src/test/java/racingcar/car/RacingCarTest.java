@@ -1,24 +1,24 @@
 package racingcar.car;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import racingcar.car.RacingCar.MoveRule;
 
-public class ConditionalMoveCarTest {
+public class RacingCarTest {
+
+    private static final int MOVING_FORWARD = 4;
+    private static final int STOP = 3;
+    private RacingCar defaultBehaviorCar;
 
     // public helper method for testing
     public static RacingCar getRacingCarByNameAndDistance(String name, int distance) {
         return new RacingCar(name, distance);
     }
-
-    private static final int MOVING_FORWARD = 4;
-    private static final int STOP = 3;
-
-    private RacingCar defaultBehaviorCar;
 
     @BeforeEach
     void setUp() {
@@ -33,12 +33,12 @@ public class ConditionalMoveCarTest {
 
     @Test
     void testForwardWhenValueGreaterThanFourAsDefault() {
-        assertEquals(true, defaultBehaviorCar.forward(MOVING_FORWARD));
+        assertTrue(defaultBehaviorCar.forward(MOVING_FORWARD));
     }
 
     @Test
     void testForwardWhenValueLessThanFourAsDefault() {
-        assertEquals(false, defaultBehaviorCar.forward(STOP));
+        assertFalse(defaultBehaviorCar.forward(STOP));
     }
 
     @Test
@@ -70,11 +70,18 @@ public class ConditionalMoveCarTest {
         MoveRule customRule = new RacingCar.MoveRule(7, 6, 8);
         RacingCar customMoveCar = RacingCar.builder().name("asd").moveRule(customRule).build();
 
-        assertEquals(true, customMoveCar.forward(7));
-        assertEquals(false, customMoveCar.forward(6));
+        assertTrue(customMoveCar.forward(7));
+        assertFalse(customMoveCar.forward(6));
 
         assertThrows(IllegalArgumentException.class, () -> customMoveCar.forward(5));
         assertThrows(IllegalArgumentException.class, () -> customMoveCar.forward(9));
+    }
+
+    @Test
+    void testCustomNameLengthRule() {
+        NamedCar.NameLengthRule customRule = new NamedCar.NameLengthRule(1, 2);
+        assertThrows(IllegalArgumentException.class,
+                () -> RacingCar.builder().name("asd").nameLengthRule(customRule).build());
     }
 
 }
