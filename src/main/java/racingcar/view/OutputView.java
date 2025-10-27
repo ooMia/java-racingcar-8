@@ -1,7 +1,8 @@
 package racingcar.view;
 
-import racingcar.RacingGame;
 import racingcar.car.RacingCar;
+import racingcar.game.RacingGame;
+import racingcar.game.RacingGame.GameIteration;
 
 public final class OutputView {
 
@@ -27,9 +28,10 @@ public final class OutputView {
         return String.join(", ", carNames);
     }
 
-    public static void printRunIterationLog(RacingGame racingGame, int iteration) {
+    public static void printRunIterationLog(RacingGame racingGame, GameIteration iteration) {
         System.out.println("실행 결과");
-        for (var i = 0; i < iteration; ++i) {
+        int numberIteration = iteration.positiveInteger();
+        while (numberIteration-- > 0) {
             racingGame.iterateSingleLap();
             System.out.println(racingGame);
         }

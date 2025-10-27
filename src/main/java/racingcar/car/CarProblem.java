@@ -4,8 +4,8 @@ enum CarProblem {
 
     MOVE_ARGUMENT_OUT_OF_RANGE,
     FORWARD_EXCEED_LIMIT,
-    CAR_NAME_OUT_OF_BOUND,
-    CAR_NAME_NON_NULL_CONSTRAINT;
+    NAME_OUT_OF_BOUND,
+    NAME_NOT_PRINTABLE_CONSTRAINT;
 
     private final String message;
 

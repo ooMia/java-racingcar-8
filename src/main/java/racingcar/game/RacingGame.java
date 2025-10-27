@@ -1,9 +1,8 @@
-package racingcar;
+package racingcar.game;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 import racingcar.car.RacingCar;
 import racingcar.view.OutputView;
 
@@ -15,12 +14,20 @@ public class RacingGame {
     }
 
     private static List<RacingCar> uniqueRacingCars(List<String> carNames) {
-        // self-assigned rule
-        // TODO: handling uppercase difference
+        // self-assigned rule: name cannot be duplicated
         if (Set.copyOf(carNames).size() != carNames.size()) {
-            throw GlobalProblem.CAR_NAME_DUPLICATE.exception();
+            throw GameProblem.CAR_NAME_DUPLICATE.exception();
         }
-        return carNames.stream().map(RacingCar::new).toList();
+        var result = carNames.stream().map(RacingCar::new).toList();
+        if (result.isEmpty()) {
+            throw GameProblem.NO_CAR_EXISTS.exception();
+        }
+        return result;
+    }
+
+    // TEST-PURPOSE ONLY
+    RacingGame(List<RacingCar> racingCars) {
+        this.racingCars = racingCars;
     }
 
     public void iterateSingleLap() {
@@ -30,21 +37,21 @@ public class RacingGame {
     }
 
     public String getCurrentWinners() {
-        var winnerNames = getWinners(this.racingCars);
+        var winnerNames = getWinners();
         return OutputView.gameWinners(winnerNames);
     }
 
-    static List<String> getWinners(List<RacingCar> racingCars) {
+    List<String> getWinners() {
         var comparator = RacingCar.comparator().reversed();
         var sortedRacingCars = racingCars.stream().sorted(comparator).toList();
-        var firstPrizeCar = sortedRacingCars.getFirst();
+        var firstPrizeOpponent = sortedRacingCars.getFirst();
 
         var winnerNameList = new ArrayList<String>();
-        for (var car : sortedRacingCars) {
-            if (isTargetLostToOpponent(car, firstPrizeCar)) {
+        for (var target : sortedRacingCars) {
+            if (isTargetLostToOpponent(target, firstPrizeOpponent)) {
                 break;
             }
-            winnerNameList.add(car.name);
+            winnerNameList.add(target.name);
         }
         return winnerNameList;
     }
@@ -59,6 +66,13 @@ public class RacingGame {
     }
 
     public record GameInfo(List<String> carNames) {
+    }
 
+    public record GameIteration(int positiveInteger) {
+        public GameIteration {
+            if (positiveInteger < 0) {
+                throw GameProblem.ITERATION_NEGATIVE.exception();
+            }
+        }
     }
 }

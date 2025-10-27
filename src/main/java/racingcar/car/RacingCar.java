@@ -1,11 +1,10 @@
 package racingcar.car;
 
 import java.util.Comparator;
-
-import camp.nextstep.edu.missionutils.Randoms;
+import racingcar.util.external.MissionUtil;
 import racingcar.view.OutputView;
 
-public class RacingCar extends NamedCar implements Movable {
+public class RacingCar extends NamedCar {
 
     private MoveRule moveRule = MoveRule.DEFAULT_RULE;
     private int distance;
@@ -26,14 +25,17 @@ public class RacingCar extends NamedCar implements Movable {
         this.distance = distance;
     }
 
-    @Override
+    public static Comparator<RacingCar> comparator() {
+        return Comparator.comparingInt(car -> car.distance);
+    }
+
     public void move() {
         int randomValue = getRandomDice();
         forward(randomValue);
     }
 
     private int getRandomDice() {
-        return Randoms.pickNumberInRange(moveRule.lowerBound, moveRule.upperBound);
+        return MissionUtil.instance.pickNumberInRange(moveRule.lowerBound, moveRule.upperBound);
     }
 
     boolean forward(int value) throws IllegalArgumentException {
@@ -53,12 +55,8 @@ public class RacingCar extends NamedCar implements Movable {
         return OutputView.racingCar(name, distance);
     }
 
-    public static Comparator<RacingCar> comparator() {
-        return Comparator.comparingInt(car -> car.distance);
-    }
-
-    public record MoveRule(int minimumDiceToMove, int lowerBound, int upperBound) {
-        public static final MoveRule DEFAULT_RULE = new MoveRule(4, 0, 9);
+    public record MoveRule(int lowerBound, int minimumDiceToMove, int upperBound) {
+        public static final MoveRule DEFAULT_RULE = new MoveRule(0, 4, 9);
 
         public boolean isForward(int dice) {
             validate(dice);
@@ -69,35 +67,6 @@ public class RacingCar extends NamedCar implements Movable {
             if (dice < lowerBound || dice > upperBound) {
                 throw CarProblem.MOVE_ARGUMENT_OUT_OF_RANGE.exception();
             }
-        }
-    }
-
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    static class Builder {
-        private String name;
-        private MoveRule moveRule = MoveRule.DEFAULT_RULE;
-        private NameLengthRule nameLengthRule = NameLengthRule.DEFAULT_RULE;
-
-        Builder name(String name) {
-            this.name = name;
-            return this;
-        }
-
-        Builder moveRule(MoveRule moveRule) {
-            this.moveRule = moveRule;
-            return this;
-        }
-
-        Builder nameLengthRule(NameLengthRule nameLengthRule) {
-            this.nameLengthRule = nameLengthRule;
-            return this;
-        }
-
-        RacingCar build() {
-            return new RacingCar(name, nameLengthRule, moveRule);
         }
     }
 }
