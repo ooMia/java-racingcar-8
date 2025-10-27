@@ -1,7 +1,7 @@
 package racingcar.car;
 
-import camp.nextstep.edu.missionutils.Randoms;
 import java.util.Comparator;
+import racingcar.util.external.MissionUtil;
 import racingcar.view.OutputView;
 
 public class RacingCar extends NamedCar implements Movable {
@@ -40,7 +40,7 @@ public class RacingCar extends NamedCar implements Movable {
     }
 
     private int getRandomDice() {
-        return Randoms.pickNumberInRange(moveRule.lowerBound, moveRule.upperBound);
+        return MissionUtil.instance.pickNumberInRange(moveRule.lowerBound, moveRule.upperBound);
     }
 
     boolean forward(int value) throws IllegalArgumentException {
